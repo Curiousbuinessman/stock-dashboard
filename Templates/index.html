@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Dashboard</title>
+</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<body>
+    <h1>Stock Dashboard</h1>
+    <h2>Get the latest stock information and news updates.</h2>
+
+<form method="GET" action="/">
+    <input type="text" name="company_name" placeholder="Enter a stock symbol">
+    <button type="submit">Search</button>
+</form>
+
+<p>You are viewing: {{ symbol }}</p>
+
+<p>Current Price: {{ price }}</p>
+
+    <h2>Latest News</h2>
+    {% if articles %}
+    <ul>
+        {% for article in articles %}
+        <li>
+            <strong>{{ article.title }}</strong> - Sentiment: {{ article.overall_sentiment_label }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No news articles found for this stock at this time, possibly due to API rate limits.</p>
+    {% endif %}
+</body>
+</html>
