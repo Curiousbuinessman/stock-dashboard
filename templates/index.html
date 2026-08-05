@@ -17,17 +17,91 @@
 
 <p>Current Price: {{ price }}</p>
 
-    <h2>Latest News</h2>
-    {% if articles %}
-    <ul>
-        {% for article in articles %}
-        <li>
-            <strong>{{ article.title }}</strong> - Sentiment: {{ article.overall_sentiment_label }}
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>No news articles found for this stock at this time, possibly due to API rate limits.</p>
-    {% endif %}
+
+<div class="dashboard-row">
+
+
+     <div class="movers-row">
+
+       <div class="most-actively-traded-section"> 
+        <h2>Most Actively Traded</h2>
+        {% if most_actively_traded %}
+        <ul>
+            {% for stock in most_actively_traded %}
+            <li>{{ stock.ticker }} - {{ stock.price }} - {{ stock.change_percentage }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No most actively traded data available.</p>
+        {% endif %}
+
+    </div>
+
+
+
+    <div class="news-section"> 
+        <h2>Latest News</h2>
+        {% if articles %}
+        <ul>
+            {% for article in articles %}
+            <li>
+                <a href="{{ article.url }}" target="_blank">{{ article.title }}</a> - Published on: {{ article.time_published }} - Source: {{ article.source }} - Sentiment: {{ article.overall_sentiment_label }}
+
+
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No news articles found for this stock at this time, possibly due to API rate limits.</p>
+        {% endif %}
+    </div>
+
+   
+
+        <div class="gainers-losers-column">
+
+            <div class="top-gainers-section">
+            <h2>Top Gainers</h2>
+            {% if top_gainers %}
+        <ul>
+            {% for stock in top_gainers %}
+            <li>{{ stock.ticker }} - {{ stock.price }} - {{ stock.change_percentage }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No top gainers data available.</p>
+        {% endif %}
+
+    </div>
+
+         <div class="top-losers-section">
+         <h2>Top Losers</h2>
+         {% if top_losers %}
+         <ul>
+            {% for stock in top_losers %}
+             <li>{{ stock.ticker }} - {{ stock.price }} - {{ stock.change_percentage }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No top losers data available.</p>
+        {% endif %}
+
+        </div>
+    </div>
+    
+</div>
+
+
+
+
 </body>
+
+<p>Company name: "{{ official_name }}"</p>
+<p>Sector: "{{ sector }}"</p>
+     
+{%if official_name == "Company name not found" %}
+<p>Company details not found for this stock symbol.</p>
+{% endif %}
+
+
 </html>
